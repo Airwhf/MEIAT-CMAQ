@@ -1,0 +1,31 @@
+ &global
+    griddesc_file = "input/GRIDDESC.PRD274x181"
+    griddesc_name = "PRD274x181"
+    big_grid_file = "shapefile/MEIC-0P25.shp"
+    inventory_label = "MEIC"
+    inventory_year = "2019"
+    sectors = 'transportation', 'residential', 'power', 'agriculture', 'industry'
+    allocator = 'line', 'population-nodata-0.tif', 'ave-nodata-0.tif', 'ave-nodata-0.tif', 'ave-nodata-0.tif',
+    allocator_type = "line", "raster", "raster", "raster", "raster"
+    geotiff_dir = "H:\MEIC\QJX-MEIC-2019-2020\GeoTiff-2019"
+    inventory_mechanism = "MEIC-CB05"
+    target_mechanism = "CB06"
+    start_date = "2020-07-01"
+    end_date = "2020-07-02"
+    cores = 4
+ /
+
+ &line
+    line_files = "motorway.shp", "primary.shp", "residential.shp", "secondary.shp"
+    line_factors = 0.435798, 0.326848, 0.081712, 0.155642,
+ /
+
+ &control
+    create_grid = 1,
+    grid_info = 1,
+    create_factor = 1,
+    coarse_emission = 1,
+    create_source = 1,
+ /
+
+
