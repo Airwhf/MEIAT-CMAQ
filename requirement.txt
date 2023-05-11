@@ -1,0 +1,6 @@
+f90nml==1.4.3
+pyioapi==0.2.2
+geopandas==0.12.2
+PseudoNetCDF==3.2.2
+rioxarray==0.14.1
+tqdm==4.64.1
