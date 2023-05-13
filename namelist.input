@@ -1,13 +1,13 @@
- &global
+&global
     griddesc_file = "input/GRIDDESC.PRD274x181"
     griddesc_name = "PRD274x181"
     big_grid_file = "shapefile/MEIC-0P25.shp"
+    geotiff_dir = "H:\MEIC\GeoTiff-2017"
     inventory_label = "MEIC"
-    inventory_year = "2019"
+    inventory_year = "2017"
     sectors = 'transportation', 'residential', 'power', 'agriculture', 'industry'
     allocator = 'line', 'population-nodata-0.tif', 'ave-nodata-0.tif', 'ave-nodata-0.tif', 'ave-nodata-0.tif',
     allocator_type = "line", "raster", "raster", "raster", "raster"
-    geotiff_dir = "H:\MEIC\QJX-MEIC-2019-2020\GeoTiff-2019"
     inventory_mechanism = "MEIC-CB05"
     target_mechanism = "CB06"
     start_date = "2020-07-01"
@@ -27,5 +27,3 @@
     coarse_emission = 1,
     create_source = 1,
  /
-
-
