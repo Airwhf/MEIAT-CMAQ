@@ -60,6 +60,8 @@ output_dir = "输出文件所在目录路径"
 * SECTOR：部门名称，**注意：SECTOR的前后是两个`_`,而不是一个。**
 * POLLUTANT：物种名称。
 
+**注意：TIFF中的单位必须是`Mg/month`或者`Mmol/month`。**
+
 以下是一个`namelist.input`的示例：
 
 1. 网格和文件名信息。
