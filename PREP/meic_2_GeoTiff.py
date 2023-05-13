@@ -16,8 +16,8 @@ import re
 if __name__ == "__main__":
     print("This script is written by Jiaxin Qiu.")
     # ------------------------------------------
-    input_dir = r"H:\MEIC\QJX-MEIC-2019-2020\2019"
-    output_dir = r"H:\MEIC\QJX-MEIC-2019-2020\GeoTiff-2019"
+    input_dir = r"H:\MEIC\月排放-原始\2017"
+    output_dir = r"H:\MEIC\GeoTiff-2017"
     # ------------------------------------------
 
     if os.path.exists(output_dir) is False:
@@ -27,8 +27,8 @@ if __name__ == "__main__":
 
     for file in tqdm.tqdm(files):
         sub_name = os.path.basename(file)
-        # condition = f"(.*?)_(.*?)_(.*?)_(.*?).asc"
-        condition = f"(.*?)_(.*?)__(.*?)__(.*?).asc"  # For 2019 and 2020.
+        condition = f"(.*?)_(.*?)_(.*?)_(.*?).asc"
+        # condition = f"(.*?)_(.*?)__(.*?)__(.*?).asc"  # For 2019 and 2020.
         encode_name = re.findall(condition, sub_name)[0]
         year = r"%.4d" % int(encode_name[0])
         mm = r"%.2d" % int(encode_name[1])
