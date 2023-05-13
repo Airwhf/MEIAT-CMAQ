@@ -12,7 +12,7 @@ from rasterio.transform import Affine
 
 if __name__ == "__main__":
     # Set where is the origin inventory in.
-    fdir = "/mnt/d/HEIC"
+    fdir = r"H:\MEIC\中国高分辨率大气污染物集成清单"
 
     # Set the name of inventory.
     files = glob.glob(f"{fdir}/*.nc")
@@ -37,9 +37,8 @@ if __name__ == "__main__":
             for i in range(12):
                 # convert to tons/year
                 temp_ds = ds[f"{pollutant}_{sector}"][i, ...]
-                mm = r"%.2d" % i
+                mm = r"%.2d" % (i + 1)
                 tiffile = f"HEIC_2017_{mm}__{sector}__{pollutant}.tiff"
-                # tiffile = f"{pollutant}_{sector}_month_{i + 1}.tif"
                 # print(ds)
                 with rio.open(tiffile,
                               'w',
