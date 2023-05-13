@@ -31,7 +31,7 @@
 
 下载到的MEIC通常会提供包括`*.asc`在内的一种或几种格式（如图），但本程序所有的网格化文件，都要求使用WGS1984投影的GeoTIFF文件。
 
-![MEIC下载获取到的文件目录](original_meic_files.png =100x100)
+<img src="original_meic_files.png" alt="MEIC下载获取到的文件目录" style="width:50%;">
 
 因此需要通过[MEIC转GEOTIFF工具](../PREP/meic_2_GeoTiff.py)来对MEIC进行转换。在此程序中，输入的文件仅为`*.asc`格式。
 
