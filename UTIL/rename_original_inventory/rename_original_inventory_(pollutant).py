@@ -8,11 +8,11 @@ from src import *
 
 if __name__ == "__main__":
 
-    tbl_name = {"org": ["nh3", "nox", "pm10", "pm25", "voc", "co", "sox"],
-                "new": ["NH3", "NOx", "PM10", "PM25", "VOC", "CO", "SO2"]}
+    tbl_name = {"org": ["PMcoarse"],
+                "new": ["PMC"]}
 
-    input_dir = r"D:\Emission-Inventory\UK-inventory\reclassification_tiff"
-    output_dir = r"D:\Emission-Inventory\UK-inventory\reclassification_tiff_rename"
+    input_dir = r"H:\MEIC\GeoTiff-2017"
+    output_dir = r"H:\MEIC\GeoTiff-2017_rename"
 
     main_rename_original_pollutant(tbl_name, input_dir, output_dir)
 

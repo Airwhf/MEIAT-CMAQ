@@ -141,8 +141,47 @@ output_dir = "输出文件所在目录路径"
 python .\coarse_emission_2_fine_emission.py
 ```
 
+## 第五步：完成时间分配和物种分配，并生成直接输入CMAQ的排放文件。
 
+该过程通过[Create-CMAQ-Emission-File.py](../Create-CMAQ-Emission-File.py)实现，输入以下命令执行脚本。
 
+```shell
+python .\Create-CMAQ-Emission-File.py
+```
+
+虽然在[output](../output)中成功生成了排放文件，但是在日志中发现了如下警告信息。
+
+```shell
+Warning: Do not have the pollutant named PMC.
+```
+
+这是因为在对应部门的物种文件中第一列的`PMC`无法找到（如图）
+
+![物种文件截图](speices_warning.png)
+
+根本原因是因为，GeoTIFF所在目录下的`PMC`物种的命名为`PMcoarse`.
+![img.png](meic_2017_PMcoarse.png)
+
+**解决方案**
+1. 将对应部门物种文件中第一列的`PMC`改为`PMcoarse`，重新运行第五步。
+2. 使用[rename_original_inventory_(pollutant).py](../UTIL/rename_original_inventory/rename_original_inventory_(pollutant).py)将`PMcoarse`改为`PMC`即可。
+修改`namelist.input`中的`geotiff_dir`为新的GeoTIFF目录，重新运行第四步和第五步即可。
+
+[rename_original_inventory_(pollutant).py](../UTIL/rename_original_inventory/rename_original_inventory_(pollutant).py)使用方法：
+
+* 修改输入参数
+```python
+tbl_name = {"org": ["PMcoarse"],
+            "new": ["PMC"]}
+
+input_dir = r"H:\MEIC\GeoTiff-2017"
+output_dir = r"H:\MEIC\GeoTiff-2017_rename"
+```
+* 运行代码
+```shell
+cd UTIL/rename_original_inventory
+python ./rename_original_inventory_(pollutant).py
+```
 
 
 
