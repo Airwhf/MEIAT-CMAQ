@@ -1,6 +1,7 @@
 .idea
 __pycache__/
 allocator/*.tif
+allocator/*.zip
 output/
 allocator/motorway.cpg
 allocator/motorway.dbf
