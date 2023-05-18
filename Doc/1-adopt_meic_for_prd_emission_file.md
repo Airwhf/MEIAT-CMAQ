@@ -53,7 +53,7 @@ output_dir = "输出文件所在目录路径"
 
 在配置`namelist.input`文件之前，需要强调一点：**整个程序对文件命名的要求都十分严格，请按要求给定GeoTIFF文件的命名**。
 
-命名规则为： {LABEL}_{YYYY}_{MM}__{SECTOR}__{POLLUTANT}.tiff
+命名规则为： `{LABEL}_{YYYY}_{MM}__{SECTOR}__{POLLUTANT}.tiff`
 * LABEL：可以自行指定，但不能包含`_`。
 * YYYY：清单年份，4位字符串。
 * MM：清单月份，2位字符串。
