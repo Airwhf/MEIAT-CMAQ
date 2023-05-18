@@ -18,11 +18,14 @@ from rasterio.transform import Affine
 
 if __name__ == '__main__':
     # The path of MIX emissions inventory.
-    fdir = "/mnt/f/MEIC-排放清单/MIX清单/MIX_2010"
-    output_dir = "/mnt/e/GitHub/MyCode/Python/CMAQ-Tools/排放清单工具/排放清单数据库/MIX-2010"
+    fdir = r"E:\MEIC\MIX\MIX_2010_Origin"
+    output_dir = r"E:\MEIC\MIX\MIX_2010_Origin\MIX-2010"
 
     # Set the year of emission inventory.
     year = 2010
+
+    if os.path.exists(output_dir) is False:
+        os.mkdir(output_dir)
 
     # Search the files.
     files = glob.glob(f"{fdir}/*.nc")
