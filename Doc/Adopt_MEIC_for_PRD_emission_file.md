@@ -53,7 +53,7 @@ output_dir = "输出文件所在目录路径"
 
 在配置`namelist.input`文件之前，需要强调一点：**整个程序对文件命名的要求都十分严格，请按要求给定GeoTIFF文件的命名**。
 
-命名规则为： ${LABEL}_${YYYY}_${MM}__${SECTOR}__${POLLUTANT}.tiff
+命名规则为： {LABEL}_{YYYY}_{MM}__{SECTOR}__{POLLUTANT}.tiff
 * LABEL：可以自行指定，但不能包含`_`。
 * YYYY：清单年份，4位字符串。
 * MM：清单月份，2位字符串。
@@ -73,7 +73,7 @@ output_dir = "输出文件所在目录路径"
 * inventory_year：原始清单文件名中的`${YYYY}`。
 
 2. 空间分配信息（以下参数保证一一对应）。
-* sectors： 分配部门，部门为GeoTIFF文件名中所提到的`${SECTOR}`。
+* sectors： 分配部门，部门为GeoTIFF文件名中所提到的`{SECTOR}`。
 * allocator：分配因子，分配因子所在路径必须放在[allocator](../allocator)目录中，当对应的分配类型为`line`时，读取`&line`部分所设置的参数，此处分配因子任意填写。
 * allocator_type：分配类型，支持`raster`分配和`line`分配。
 
@@ -84,7 +84,7 @@ output_dir = "输出文件所在目录路径"
 3. 物种分配谱信息。
 * inventory_mechanism：字符串，配合`target_mechanism`使用，用于寻找对应的物种分配文件，不能含有`_`。
 * target_mechanism：字符串，配合`inventory_mechanism`使用，用于寻找对应的物种分配文件，不能含有`_`。
-**注意：物种分配谱文件存放于[species](../species)中，且物种分配文件的命名规则为：${inventory_mechanism}_${target_mechanism}_speciate_${SECTOR}**
+**注意：物种分配谱文件存放于[species](../species)中，且物种分配文件的命名规则为：{inventory_mechanism}_{target_mechanism}_speciate_{SECTOR}**
 
 4. 排放文件日期
 * start_date：排放文件的开始日期，格式：YYYY-MM-DD
@@ -169,21 +169,9 @@ Warning: Do not have the pollutant named PMC.
 2. 使用[rename_original_inventory_(pollutant).py](../UTIL/rename_original_inventory/rename_original_inventory_(pollutant).py)将`PMcoarse`改为`PMC`即可。
 修改`namelist.input`中的`geotiff_dir`为新的GeoTIFF目录，重新运行第四步和第五步即可。
 
-[rename_original_inventory_(pollutant).py](../UTIL/rename_original_inventory/rename_original_inventory_(pollutant).py)使用方法：
+[rename_original_inventory_(pollutant).py](../UTIL/rename_original_inventory/rename_original_inventory_(pollutant).py)使用方法见[原始排放清单重命名使用手册](../UTIL/rename_original_inventory/README.md)。
 
-* 修改输入参数
-```python
-tbl_name = {"org": ["PMcoarse"],
-            "new": ["PMC"]}
 
-input_dir = r"H:\MEIC\GeoTiff-2017"
-output_dir = r"H:\MEIC\GeoTiff-2017_rename"
-```
-* 运行代码
-```shell
-cd UTIL/rename_original_inventory
-python ./rename_original_inventory_(pollutant).py
-```
 
 
 
