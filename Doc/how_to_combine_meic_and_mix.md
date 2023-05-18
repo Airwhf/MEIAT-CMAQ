@@ -56,5 +56,5 @@ python ./combine.py
 
 4. 进行空间分配、物种分配和时间分配。
 
-此步骤和[第一个教程](adopt_meic_for_prd_emission_file.md)或第二个教程中的步骤完全相同，不再赘述。
+此步骤和[第一个教程](1-adopt_meic_for_prd_emission_file.md)或第二个教程中的步骤完全相同，不再赘述。
 
