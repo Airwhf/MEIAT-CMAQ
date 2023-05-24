@@ -1,6 +1,7 @@
 .idea
 __pycache__/
 allocator/*.tif
+allocator/*.zip
 output/
 allocator/motorway.cpg
 allocator/motorway.dbf
@@ -32,7 +33,7 @@ allocator/secondary.shp
 allocator/secondary.shx
 comparison/emission_transportation_20220102.nc
 build/
-src.cp39-win_amd64.pyd
+src.pyd
 src.c
 test.py
 input/GRIDDESC.CN245x195
