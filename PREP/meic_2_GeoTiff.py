@@ -16,8 +16,8 @@ import re
 if __name__ == "__main__":
     print("This script is written by Jiaxin Qiu.")
     # ------------------------------------------
-    input_dir = r"H:\MEIC\月排放-原始\2017"
-    output_dir = r"H:\MEIC\GeoTiff-2017"
+    input_dir = r"D:\GitHub\MEIAT-CMAQ-data\MEIC_SPARC07_2013"
+    output_dir = r"D:\GitHub\MEIAT-CMAQ-data\G-MEIC_SPARC07_2013"
     # ------------------------------------------
 
     if os.path.exists(output_dir) is False:
