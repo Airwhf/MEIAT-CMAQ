@@ -1,4 +1,5 @@
 # 使用2017年的MEIC清单制作珠三角的排放文件
+**作者：王浩帆**
 
 本教程通过一个制作珠江三角洲模拟域（空间分辨率：3km）的排放清单来讲解以下两个程序的运行流程。
 1. [coarse_emission_2_fine_emission.py](../coarse_emission_2_fine_emission.py)
