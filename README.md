@@ -1,4 +1,4 @@
-# MEIAT-CMAQ v1.3.3
+# MEIAT-CMAQ v1.3.4
 
 开发者：
 * 王浩帆 （中山大学 大气科学学院）
@@ -30,6 +30,7 @@ MEIAT-CMAQ是一个针对CMAQ模型的模块化排放清单分配工具，可以
 4. 如何同时使用本地源清单和MEIC清单？
 5. [如何使用shapefile文件生成CMAQ中的mask文件？](Doc/how_to_use_shapefile_for_mask.md)
 6. [如何处理只有年总量的排放清单？](Doc/how_to_treat_the_yearly_emission.md)
+7. [如何对排放文件进行垂直分配？](Doc/how_to_do_vertical_allocation.md)
 
 ## 数据下载
 
