@@ -58,7 +58,7 @@ QQ群: 805594259
 
 --------------
 
-5. [在MEIC清单中使用本地排放源。](Doc\adopt_local_emission_to_meic_cn.md)
+5. [在MEIC清单中使用本地排放源。](Doc/adopt_local_emission_to_meic_cn.md)
 
 * 此教程将会引导用户学会如何灵活使用MEIAT-CMAQ使其能够同时使用表格化排放清单和网格化排放清单。
 
