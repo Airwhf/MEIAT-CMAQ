@@ -33,7 +33,6 @@ allocator/secondary.shp
 allocator/secondary.shx
 comparison/emission_transportation_20220102.nc
 build/
-src.pyd
 src.c
 test.py
 input/GRIDDESC.CN245x195
