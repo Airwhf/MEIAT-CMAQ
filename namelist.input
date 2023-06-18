@@ -1,12 +1,12 @@
 &global
     griddesc_file = "input/GRIDDESC.PRD274x181"
     griddesc_name = "PRD274x181"
-    big_grid_file = "shapefile/MEIC-0P25.shp"
-    geotiff_dir = "H:\MEIC\GeoTiff-2017"
+    big_grid_file = "shapefile/CN-City.shp"
+    geotiff_dir = "H:/MEIC/GeoTiff-2017"
     inventory_label = "MEIC"
     inventory_year = "2017"
     sectors = 'transportation', 'residential', 'power', 'agriculture', 'industry'
-    allocator = 'line', 'population-nodata-0.tif', 'ave-nodata-0.tif', 'ave-nodata-0.tif', 'ave-nodata-0.tif',
+    allocator = 'line', 'landscan-global-2017_nodata.tif', 'power.tif', 'agriculture.tif', 'industry.tif',
     allocator_type = "line", "raster", "raster", "raster", "raster"
     inventory_mechanism = "MEIC-CB05"
     target_mechanism = "CB06"
@@ -25,5 +25,5 @@
     grid_info = 1,
     create_factor = 1,
     coarse_emission = 1,
-    create_source = 1,
+    create_source = 0,
  /
