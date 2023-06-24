@@ -1,5 +1,11 @@
 # 如何对排放文件进行垂直分配？
 
+--------------------
+
+**作者：王浩帆**
+
+--------------------
+
 面源排放的垂直分配过程是使用[vertical_allocation.py](../vertical_allocation.py)
 
 * 程序提供了power和industry两个部门的垂直分配方案，分别是`profile-industry.csv`和`profile-power.csv`，用户也可以按照已提供的两个文件格式自定义垂直分配系数。

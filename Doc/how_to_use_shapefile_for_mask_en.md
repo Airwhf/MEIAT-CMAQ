@@ -4,7 +4,7 @@ How to use shapefile file to generate mask file in CMAQ?
 
 **Translator: Yinbao Jin**
 
-**Author: Wang Haofan**
+**Author: Jiaxin Qiu**
 
 ----------------------------
 
