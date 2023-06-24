@@ -4,7 +4,7 @@
 
 **Translator: Yifei Xu**
 
-**Author: Haofan Wang**
+**Author: Jiaxin Qiu**
 
 ------------------------
 

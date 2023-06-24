@@ -1,13 +1,15 @@
-# 在MEIC清单中使用本地排放源
+# Using local emission sources within the MEIC inventory.
 
 --------------------
 
-**作者：王浩帆**
+**Translator: Yuqi Zhu**
+
+**Author: Haofan Wang**
 
 --------------------
 
 
-在开始此教程以前，我们已经有了一份广州市的本地工业排放清单（表）。
+Prior to commencing this tutorial, we already possess a local industrial emission inventory (table) for the city of Guangzhou.
 
 | Pollutant Name | Total Amount (Mg) |
 | -------------- | ----------------- |
@@ -15,12 +17,12 @@
 | SO2            | 2000              |
 
 
-## 步骤1：配置namelist.input
+## Step 1: Configure the namelist.input file.
 
-主要注意以下两点：
+Two main points should be noted:
 
-* 修改`big_grid_file`为：`big_grid_file = "shapefile/CN-City.shp"`
-* 修改`create_source`为：`create_source = 0,`
+* Modify the `big_grid_file` parameter as follows: `big_grid_file = "shapefile/CN-City.shp"`
+* Modify the `create_source` parameter as follows: `create_source = 0,`
 
 ```
 &global
@@ -54,26 +56,26 @@
  /
  ```
 
- ## 步骤2：运行`coarse_emission_2_fine_emission.py`
+## Step 2: Run the `coarse_emission_2_fine_emission.py` script.
 
- 在终端中输入命令：
+Enter the following command in the terminal:
 
  ```shell
 python coarse_emission_2_fine_emission.py
  ```
 
-## 步骤3：打开`output\zoning_statistics\MEIC_2017_07__industry__*`
+## Step 3: Open the `output\zoning_statistics\MEIC_2017_07__industry__*` file.
 
-1. 打开`output\zoning_statistics\MEIC_2017_07__industry__NOx.csv`，将箭头所值位置改为本地清单中的NOx排放量（1000）:
+1. Open the `output\zoning_statistics\MEIC_2017_07__industry__NOx.csv` file and replace the value at the arrow position with the NOx emissions (1000) from the local inventory:
 
-![修改区域统计结果-NOx](zonalst_nox.png)
+![Modify regional statistics result - NOx](zonalst_nox.png)
 
 
-同理打开`output\zoning_statistics\MEIC_2017_07__industry__SO2.csv`，修改广州市的SO2排放量。
+Similarly, open the `output\zoning_statistics\MEIC_2017_07__industry__SO2.csv` file and modify the SO2 emissions for Guangzhou city.
 
-## 步骤4：重新配置namelist.input
+## Step 4: Reconfigure the namelist.input file.
 
-* 只需要修改`&control`部分即可。
+* Only the `&control` section needs to be modified.
 
 ```
 &global
@@ -107,17 +109,17 @@ python coarse_emission_2_fine_emission.py
  /
  ```
 
- ## 步骤5：运行`coarse_emission_2_fine_emission.py`
+## Step 5: Run the `coarse_emission_2_fine_emission.py` script.
 
- 在终端中输入命令：
+Enter the following command in the terminal:
 
  ```shell
 python coarse_emission_2_fine_emission.py
  ```
 
- ## 步骤6：运行`Create-CMAQ-Emission-File.py`
+## Step 6: Run the `Create-CMAQ-Emission-File.py` script.
 
-  在终端中输入命令：
+Enter the following command in the terminal:
 
  ```shell
 python Create-CMAQ-Emission-File.py
