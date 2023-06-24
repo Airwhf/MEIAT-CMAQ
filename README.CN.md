@@ -34,9 +34,7 @@ QQ群: 805594259
 
 --------------
 
-1. 配置MEIAT-CMAQ的运行环境。
-
-教程链接：https://mp.weixin.qq.com/s/1CEcoSDeCF9l-an_GD_EJg
+1. [配置MEIAT-CMAQ的运行环境。](https://mp.weixin.qq.com/s/1CEcoSDeCF9l-an_GD_EJg)
 
 * 此教程将详细讲解如何配置MEIAT-CMAQ的运行环境。
 
