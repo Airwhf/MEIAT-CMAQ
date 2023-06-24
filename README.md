@@ -15,7 +15,7 @@ The user manual has been updated to a bilingual version, currently featuring bot
 
  更新用户手册为双语版本，目前具有中文和英文手册。
 
-**Contribution by: Yifei Xu, Ao Shen, Yinbao Jin, Yuqi Zhu**
+**Contribution by: Yifei Xu, Yinbao Jin, Yuqi Zhu, Ao Shen**
 
 --------------------------
 
