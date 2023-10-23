@@ -2,6 +2,7 @@
 __pycache__/
 allocator/*.tif
 allocator/*.zip
+model_emission*
 output/
 allocator/motorway.cpg
 allocator/motorway.dbf

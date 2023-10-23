@@ -9,10 +9,10 @@ if __name__ == "__main__":
     thus, we should calculate the PMC inventory via PM2.5 and PM10.
     """
     # Set the input directory.
-    input_dir = r"D:\GitHub\MEIAT-CMAQ-data\MIX-2010"
+    input_dir = r"F:\data\MEICv1.4\2020"
 
     # Set the inventory prefix.
-    prefix = "MIX"
+    prefix = "MEIC"
 
     # Set the months.
     months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
@@ -23,7 +23,7 @@ if __name__ == "__main__":
     sectors = ['residential', 'transportation', 'power', 'industry', 'agriculture']
 
     # Set the years.
-    years = [2010]
+    years = [2020]
 
     for month in months:
         for sector in sectors:
