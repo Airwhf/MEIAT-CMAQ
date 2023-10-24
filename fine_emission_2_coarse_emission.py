@@ -94,7 +94,7 @@ def source2cmaq(emission_date, grid_desc, grid_name, sector, input_dir, inventor
         withcf=False,
     )
     gf.updatetflag(overwrite=True)
-    tmpf = gf.sliceDimensions(TSTEP=[0] * 24)
+    tmpf = gf.sliceDimensions(TSTEP=[0] * 25)
     max_col_index = getattr(tmpf, "NCOLS") - 1
     max_row_index = getattr(tmpf, "NROWS") - 1
 
