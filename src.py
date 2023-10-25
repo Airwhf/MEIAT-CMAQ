@@ -330,9 +330,6 @@ def main_create_CMAQ_mask(gadmpath, field, output_name):
     outf.SDATE = -635
     savedf = outf.save(output_name, verbose=0, complevel=1)
     savedf.close()
-
-
-def main_rename_original_pollutant(tbl_name, input_dir, output_dir):
     # --------------------------------------------------------------------------------------------------------
     if user_control() is True:
         print("### This system is developed by Haofan Wang.            ###")
