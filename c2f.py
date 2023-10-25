@@ -5,7 +5,6 @@ from src_c2f import *
 
 
 if __name__ == '__main__':
-
     # ========================================================================================
     # Set GRIDDESC configuration.
     griddesc_file = 'input/GRIDDESC.PRD274x181'

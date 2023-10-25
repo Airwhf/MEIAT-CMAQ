@@ -2,6 +2,9 @@ import numpy as np
 import rasterio as rio
 import rasterio.errors
 
+def calculate_pmc():
+    pass
+
 if __name__ == "__main__":
     """
     Sometimes there are only inventory of PM2.5 and PM10.
