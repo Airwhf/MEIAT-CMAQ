@@ -39,3 +39,4 @@ test.py
 input/GRIDDESC.CN245x195
 mask.nc
 fine_emission_2_coarse_emission_*
+c2f_*.py
