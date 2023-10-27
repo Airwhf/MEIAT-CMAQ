@@ -12,7 +12,7 @@ os.environ["IOAPI_ISPH"] = "6370000."
 pd.options.mode.chained_assignment = None
 
 
-def read_tiff(file):
+def read_tiff(file, shapefactor=2):
     """
 
     :param file: The file path of GeoTIFF.
@@ -21,8 +21,14 @@ def read_tiff(file):
     dataset = rxr.open_rasterio(file)
     longitude = dataset.coords["x"].values
     latitude = dataset.coords["y"].values
-    lons, lats = np.meshgrid(longitude, latitude)
+    # lons, lats = np.meshgrid(longitude, latitude)
     value = dataset[0, ...].values
+    # Update the shape factor on 27/10/2023 by Haofan.
+    new_shape = (value.shape[0]*shapefactor, value.shape[1]*shapefactor)
+    value = np.kron(value, np.ones((shapefactor, shapefactor), dtype=value.dtype)) * (1/shapefactor**2)
+    longitude = np.linspace(longitude[0], longitude[-1], new_shape[1])
+    latitude = np.linspace(latitude[0], latitude[-1], new_shape[0])
+    lons, lats = np.meshgrid(longitude, latitude)
     return value, lons, lats
 
 
