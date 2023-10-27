@@ -32,7 +32,7 @@ def read_tiff(file, shapefactor=2):
     return value, lons, lats
 
 
-def create_source_table(input_dir, mm, sector):
+def create_source_table(input_dir, mm, sector, shapefactor=2):
     """
 
     :param input_dir: the path of input directory which store the GeoTIFF files.
@@ -48,7 +48,7 @@ def create_source_table(input_dir, mm, sector):
     # --- Start loop of the sector files.
     for file in files:
         # Read the GeoTIFF and return the value and geographic information.
-        value, lons, lats = read_tiff(file)
+        value, lons, lats = read_tiff(file, shapefactor=shapefactor)
 
         # Get the species name from file name.
         basename = os.path.basename(file)
@@ -63,7 +63,7 @@ def create_source_table(input_dir, mm, sector):
         df["lon"] = lons.flatten()
     return df
 
-def source2cmaq(emission_date, grid_desc, grid_name, sector, input_dir, inventory_mechanism, target_mechanism, output_dir):
+def source2cmaq(emission_date, grid_desc, grid_name, sector, input_dir, inventory_mechanism, target_mechanism, output_dir, shapefactor=2):
     """
 
     :param emission_date: set the date for CMAQ emission file.
@@ -100,7 +100,7 @@ def source2cmaq(emission_date, grid_desc, grid_name, sector, input_dir, inventor
     max_row_index = getattr(tmpf, "NROWS") - 1
 
     # Create the source file and read it.
-    data = create_source_table(input_dir, mm, sector)
+    data = create_source_table(input_dir, mm, sector, shapefactor=shapefactor)
 
     # Add I and J coordinate and calculate the total emission.
     data["I"], data["J"] = tmpf.ll2ij(data.lon.values, data.lat.values)

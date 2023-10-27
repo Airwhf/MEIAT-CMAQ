@@ -28,6 +28,9 @@ if __name__ == "__main__":
     # Species allocation.
     inventory_mechanism = 'MEIC-CB05'
     target_mechanism = 'CB06'
+    
+    # shape factor
+    shapefactor = 4
     # ========================================================================================
     
     start_time = time.time()
@@ -36,7 +39,7 @@ if __name__ == "__main__":
     periods = pd.period_range(pd.to_datetime(start_date), pd.to_datetime(end_date), freq='D')
     for sector in sectors:
         for emission_date in periods:
-            source2cmaq(str(emission_date), griddesc_file, griddesc_name, sector, geotiff_dir, inventory_mechanism, target_mechanism, output_dir)
+            source2cmaq(str(emission_date), griddesc_file, griddesc_name, sector, geotiff_dir, inventory_mechanism, target_mechanism, output_dir, shapefactor=shapefactor)
             
     end_time = time.time()
     elapsed_time = end_time - start_time
