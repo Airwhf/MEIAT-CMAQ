@@ -5,10 +5,6 @@ MEIAT-CMAQ: 一款针对CMAQ模型的排放清单分配工具。
 
 作者: `王浩帆 <https://airwhf.github.io/>`_、邱嘉馨
 
-**如何引用**
-
-这真的很重要！！！
-
 **联系作者**
 
 Email: wanghf58@mail2.sysu.edu.cn
@@ -16,6 +12,11 @@ Email: wanghf58@mail2.sysu.edu.cn
 QQ群: 805594259
 
 微信公众号：小王的科研笔记
+
+如何引用
+=======
+
+这真的很重要！！！
 
 教程合集
 =======
