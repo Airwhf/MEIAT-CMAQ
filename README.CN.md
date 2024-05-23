@@ -1,16 +1,4 @@
-# MEIAT-CMAQ v1.4 用户手册
-
-MEIAT-CMAQ (the Modular Emission Inventory Allocation Tools for Community Multiscale Air Quality Model) 是一个针对CMAQ模型的排放清单分配工具，该工具通过python和ArcGIS pro 3.X接口实现了排放清单的快速分配。
-
-## 联系作者
-
-Email: wanghf58@mail2.sysu.edu.cn
-
-QQ群: 805594259
-
-微信公众号：小王的科研笔记
-
-## 教程目录
+# 教程目录
 
 --------------
 
