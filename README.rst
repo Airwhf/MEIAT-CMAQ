@@ -22,7 +22,9 @@ QQ群: 805594259
 
 **非常重要**：如果大家使用或者参考了本工具进行了一些工作，请大家引用下面的文章，这对我真的非常重要，谢谢！！！
 
-**Wang, H.**, Qiu, J., Liu, Y., Fan, Q., Lu, X., Zhang, Y., Wu, K., ..., & Sun, J., Wang, H., (2024). MEIAT-CMAQ: A Modular Emission Inventory Allocation Tool for Community Multiscale Air Quality Model. Atmospheric Environment, 2024, 120614. url: [https://doi.org/10.1016/j.atmosenv.2024.120604](https://doi.org/10.1016/j.atmosenv.2024.120604)
+**Wang, H.**, Qiu, J., Liu, Y., Fan, Q., Lu, X., Zhang, Y., Wu, K., ..., & Sun, J., Wang, H., (2024). MEIAT-CMAQ: A Modular Emission Inventory Allocation Tool for Community Multiscale Air Quality Model. Atmospheric Environment, 2024, 120614. 
+
+url: https://doi.org/10.1016/j.atmosenv.2024.120604
 
 
 教程合集
