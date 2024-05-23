@@ -1,9 +1,13 @@
 MEIAT-CMAQ v1.4-OA User's Guide
 --------------------------------
+|doi|
+
+.. |DOI| image:: https://zenodo.org/badge/DOI/10.5281/zenodo.8001532.svg
+  :target: https://doi.org/10.5281/zenodo.8001532
 
 MEIAT-CMAQ: 一款针对CMAQ模型的排放清单分配工具。
 
-作者: `王浩帆 <https://airwhf.github.io/>`_、邱嘉馨
+作者: `王浩帆 <https://airwhf.github.io/>`_，邱嘉馨
 
 **联系作者**
 
@@ -15,6 +19,12 @@ QQ群: 805594259
 
 如何引用（这真的很重要！！！）
 ============================
+
+**非常重要**：如果大家使用或者参考了本工具进行了一些工作，请大家引用下面的文章，这对我真的非常重要，谢谢！！！
+
+**Wang, H.**, Qiu, J., Liu, Y., Fan, Q., Lu, X., Zhang, Y., Wu, K., ..., & Sun, J., Wang, H., (2024). MEIAT-CMAQ: A Modular Emission Inventory Allocation Tool for Community Multiscale Air Quality Model. Atmospheric Environment, 2024, 120614. 
+
+url: https://doi.org/10.1016/j.atmosenv.2024.120604
 
 
 教程合集
