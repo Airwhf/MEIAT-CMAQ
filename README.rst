@@ -1,16 +1,13 @@
 MEIAT-CMAQ v1.4-OA User's Guide
 --------------------------------
-|doi| |docs| |GitHub| |license|
+|doi|
 
 .. |DOI| image:: https://zenodo.org/badge/DOI/10.5281/zenodo.8001532.svg
   :target: https://doi.org/10.5281/zenodo.8001532
 
-.. |GitHub| image:: https://img.shields.io/badge/GitHub-MEIAT-CMAQ-brightgreen.svg
-   :target: https://github.com/Airwhf/MEIAT-CMAQ 
-
 MEIAT-CMAQ: 一款针对CMAQ模型的排放清单分配工具。
 
-作者: `王浩帆 <https://airwhf.github.io/>`_、邱嘉馨
+作者: `王浩帆 <https://airwhf.github.io/>`_，邱嘉馨
 
 **联系作者**
 
