@@ -717,13 +717,9 @@ def create_emission_file(
 
 def create_gridinfo(small_grid, big_grid, out_path, max_id):
     # --------------------------------------------------------------------------------------------------------
-    import arcpy
-    # import pandas as pd
+    import geopandas as gpd
     import numpy as np
     import glob
-    # Use half of the cores on the machine
-    arcpy.env.parallelProcessingFactor = "50%"
-    arcpy.env.overwriteOutput = True
     # --------------------------------------------------------------------------------------------------------
     # 删除文件夹下的输出文件
     try:
@@ -736,10 +732,13 @@ def create_gridinfo(small_grid, big_grid, out_path, max_id):
         # print(f'{current_time} 输出目录已完成清理，开始进行网格信息核算。')
 
     out_feature_class = f'{out_path}\cmaq_intersect.shp'
-    in_features = [small_grid, big_grid]
-    arcpy.analysis.Intersect(in_features, out_feature_class, "ALL")
+    gdf_smallgrid = gpd.read_file(small_grid).to_crs(epsg=4326)
+    gdf_biggrid = gpd.read_file(big_grid).to_crs(gdf_smallgrid.crs)
+    intersect_out = gpd.overlay(gdf_smallgrid, gdf_biggrid,how='intersection')
+    intersect_out.to_file(out_feature_class)
+    gdf = gpd.read_file(small_grid)
     out_name = 'cmaq_grid.csv'
-    arcpy.conversion.TableToTable(small_grid, out_path, out_name)
+    gdf.to_csv(f'{out_path}/{out_name}', index=False)
 
     # 获取经纬度
     df = pd.read_csv(f'{out_path}/{out_name}')
@@ -747,12 +746,13 @@ def create_gridinfo(small_grid, big_grid, out_path, max_id):
     df_lat = df['LAT'].values
 
     # max_id = df['ID'].values.max()
-    arcpy.CalculateGeometryAttributes_management(out_feature_class, [['square', 'AREA']], area_unit='SQUARE_KILOMETERS')
-    out_name = 'cmaq_intersect.csv'
-    arcpy.conversion.TableToTable(out_feature_class, out_path, out_name)
+    gdf = gpd.read_file(out_feature_class)
+    gdf = gdf.to_crs(epsg=4547)
+    gdf['square'] = gdf.geometry.area / 1e6
+    gdf.to_csv(f'{out_path}/cmaq_intersect.csv', index=False)
 
     # 此代码块则为删除面积占比较小的属性条
-    df = pd.read_csv(f'{out_path}/{out_name}')
+    df = pd.read_csv(f'{out_path}/cmaq_intersect.csv')
     df_ids = df['ID'].values
     df_area = df['square'].values
 
@@ -790,22 +790,16 @@ def create_gridinfo(small_grid, big_grid, out_path, max_id):
     for file in file_list:
         os.remove(file)
 
-    file = f'{out_path}/schema.ini'
-    os.remove(file)
-
 
 # -------------------------------------------------------------------
 # 空间分配因子计算-道路分配
 # -------------------------------------------------------------------
 def road_allocation(road_class_list, road_dir, small_grid, big_grid, grid_info, out_path):
     # -------------------------------------------------------------------
-    # import pandas as pd
     import numpy as np
-    import arcpy
+    import geopandas as gpd
+    from shapely.geometry import box
     import glob
-    # Use half of the cores on the machine
-    arcpy.env.parallelProcessingFactor = "50%"
-    arcpy.env.overwriteOutput = True
     # -------------------------------------------------------------------
     # out_path = r'E:\chengdu\分配因子'  # 设置输出目录路径
 
@@ -824,20 +818,35 @@ def road_allocation(road_class_list, road_dir, small_grid, big_grid, grid_info, 
         except:
             current_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
 
+        gdf_road = gpd.read_file(road_file)
+
+        # 获取smallgrid的边界box
+        gdf_clip_grid = gpd.read_file(small_grid).to_crs(gdf_road.crs)
+        clip_bounds = gdf_clip_grid.total_bounds  # 获取grid的边界，用于获得裁剪roadshp的box
+        clip_box = box(clip_bounds[0], clip_bounds[1], clip_bounds[2], clip_bounds[3])
+        box_gdf = gpd.GeoDataFrame(geometry=[clip_box], crs=gdf_clip_grid.crs)  # 将box转化为gdf
+
         # 计算大网格中的道路总长
         # Clip
         clipped_big_grid = f'{out_path}/Big_grid_cliped.shp'
-        arcpy.Clip_analysis(big_grid, small_grid, clipped_big_grid)
+        clip_out = gpd.overlay(box_gdf, gpd.read_file(big_grid).to_crs(gdf_road.crs), how='intersection')
+        clip_out.to_file(clipped_big_grid)
+
         out_feature_class = f'{out_path}/Big_grid_road.shp'
-        in_features = [road_file, clipped_big_grid]
-        arcpy.analysis.Intersect(in_features, out_feature_class, "ALL")
+        clip_big_grid = gpd.read_file(clipped_big_grid).to_crs(gdf_road.crs)
+        gdf_road_clip = gpd.overlay(gdf_road, box_gdf,how='intersection') # 先用gird边界的box进行裁剪，再进行裁剪，以提高运行速度，通常进行空间分配的fine domian都较小
+        intersect_out = gpd.overlay(gdf_road_clip, clip_big_grid, how='intersection')
+        intersect_out.to_file(out_feature_class)
 
-        arcpy.CalculateGeometryAttributes_management(out_feature_class, [["Length_m", "LENGTH_GEODESIC"],], "METERS")
-        out_statistic_table = f'{out_feature_class[0:-4]}.dbf'
-        out_name = 'Big_grid_road.csv'
-        arcpy.conversion.TableToTable(out_statistic_table, out_path, out_name)
-        temp_big_grid_sst = pd.read_csv(f'{out_path}/{out_name}')
+        gdf = gpd.read_file(out_feature_class)
+        gdf = gdf.to_crs(epsg=4547)  #4547
+        gdf = gdf.explode()
+        gdf['Length_m'] = gdf.geometry.length
+        result = gdf.groupby('NAME', as_index=False)['Length_m'].sum()
+        MULTILINESTRING_combine = pd.merge(result, gdf[['NAME']].drop_duplicates(), on='NAME')
+        MULTILINESTRING_combine.to_csv(f'{out_path}/Big_grid_road.csv', index=False)
 
+        temp_big_grid_sst = pd.read_csv(f'{out_path}/Big_grid_road.csv')
         name_list = np.unique(temp_big_grid_sst['NAME'])
         length_list = []
         for temp_area in name_list:
@@ -848,16 +857,17 @@ def road_allocation(road_class_list, road_dir, small_grid, big_grid, grid_info, 
         big_grid_sst['LENGTH'] = length_list
 
         # 计算小网格中的道路总长
-        in_features = [road_file, small_grid]
         out_feature_class = f'{out_path}/Small_grid_road.shp'
-        arcpy.analysis.Intersect(in_features, out_feature_class, "ALL")
+        clip_small_out = gpd.overlay(gdf_road_clip, gpd.read_file(small_grid).to_crs(gdf_road.crs),
+                                     how='intersection')
+        clip_small_out.to_file(out_feature_class)
 
-        arcpy.CalculateGeometryAttributes_management(out_feature_class, [["Length_m", "LENGTH_GEODESIC"], ], "METERS")
-        out_statistic_table = f'{out_feature_class[0:-4]}.dbf'
-        out_name = 'Small_grid_road.csv'
-        arcpy.conversion.TableToTable(out_statistic_table, out_path, out_name)
+        gdf = gpd.read_file(out_feature_class)
+        gdf = gdf.to_crs(epsg=4547)  #
+        gdf['Length_m'] = gdf.geometry.length
+        gdf.to_csv(f'{out_path}/Small_grid_road.csv', index=False)
 
-        temp_small_grid_sst = pd.read_csv(f'{out_path}/{out_name}')
+        temp_small_grid_sst = pd.read_csv(f'{out_path}/Small_grid_road.csv')
         id_list = np.unique(temp_small_grid_sst['ID'])
         length_list = []
         for temp_id in id_list:
@@ -927,9 +937,6 @@ def road_allocation(road_class_list, road_dir, small_grid, big_grid, grid_info, 
     for file in file_list:
         os.remove(file)
 
-    file = f'{out_path}/schema.ini'
-    os.remove(file)
-
 
 def road_deal(ef_files, ef_factors, output_name):
     # -------------------------------------------------------------------
@@ -947,11 +954,9 @@ def raster_allocation(raster_file, small_grid, big_grid, grid_info, out_path, re
     # -------------------------------------------------------------------
     # import pandas as pd
     import glob
-    import arcpy
-    from arcpy.sa import ZonalStatisticsAsTable
-    # Use half of the cores on the machine
-    arcpy.env.parallelProcessingFactor = "50%"
-    arcpy.env.overwriteOutput = True
+    import geopandas as gpd
+    import rasterstats
+    from shapely.geometry import box
     # -------------------------------------------------------------------
     try:
         os.remove(f'{out_path}/Big_grid_zonalstattblout.csv')
@@ -959,21 +964,28 @@ def raster_allocation(raster_file, small_grid, big_grid, grid_info, out_path, re
     except:
         current_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
 
+    # 获取smallgrid的box边界用于clip
+    gdf_clip_grid = gpd.read_file(small_grid).to_crs(epsg=4326)
+    clip_bounds = gdf_clip_grid.total_bounds  # 获取grid的边界，用于获得裁剪roadshp的box
+    clip_box = box(clip_bounds[0], clip_bounds[1], clip_bounds[2], clip_bounds[3])
+    box_gdf = gpd.GeoDataFrame(geometry=[clip_box], crs=gdf_clip_grid.crs)  # 将box转化为gdf
 
-    # Clip
-    clipped_big_grid = f'{out_path}\Big_grid_cliped.shp'
-    arcpy.Clip_analysis(big_grid, small_grid, clipped_big_grid)
-    # statistic
-    out_statistic_table = f'{out_path}\Big_grid_zonalstattblout.dbf'
-    outZSaT = ZonalStatisticsAsTable(clipped_big_grid, "NAME", raster_file, out_statistic_table, statistics_type="SUM")
+    clipped_big_grid = f'{out_path}/Big_grid_cliped.shp'
+    clip_out = gpd.overlay(box_gdf, gpd.read_file(big_grid).to_crs(epsg=4326), how='intersection')
+    clip_out.to_file(clipped_big_grid)
+
+    outZSaT = rasterstats.zonal_stats(clipped_big_grid, raster_file, stats="sum", geojson_out=True, nodata=-999)
+    result = gpd.GeoDataFrame.from_features(outZSaT)
+    result = result.rename(columns={'sum': 'SUM'})
     out_name = 'Big_grid_zonalstattblout.csv'
-    arcpy.conversion.TableToTable(out_statistic_table, out_path, out_name)
+    result.to_csv(f'{out_path}/{out_name}', index=False)
 
-    # statistic
-    out_statistic_table = f'{out_path}\Small_grid_zonalstattblout.dbf'
-    outZSaT = ZonalStatisticsAsTable(small_grid, "ID", raster_file, out_statistic_table, statistics_type="SUM")
+    gdf_small_grid = gpd.read_file(small_grid).to_crs(epsg=4326)
+    outZSaT = rasterstats.zonal_stats(gdf_small_grid, raster_file, stats="sum", geojson_out=True, nodata=-999)
+    result = gpd.GeoDataFrame.from_features(outZSaT)
+    result = result.rename(columns={'sum': 'SUM'})
     out_name = 'Small_grid_zonalstattblout.csv'
-    arcpy.conversion.TableToTable(out_statistic_table, out_path, out_name)
+    result.to_csv(f'{out_path}/{out_name}', index=False)
 
     df = pd.read_csv(grid_info)
     big_grid_zstt = pd.read_csv(f'{out_path}\Big_grid_zonalstattblout.csv')
@@ -1044,9 +1056,6 @@ def raster_allocation(raster_file, small_grid, big_grid, grid_info, out_path, re
     for file in file_list:
         os.remove(file)
 
-    file = f'{out_path}/schema.ini'
-    os.remove(file)
-
 
 def split_file_extension(filebasename):
     filename, file_extension = os.path.splitext(filebasename)
@@ -1056,21 +1065,24 @@ def split_file_extension(filebasename):
 def zoning_statistics(small_grid, big_grid, raster_dir, out_path, mm):
 
     import glob
-    import arcgisscripting
-    import arcpy
-    from arcpy.sa import ZonalStatisticsAsTable
+    import geopandas as gpd
+    import rasterstats
+    from shapely.geometry import box
     import tqdm
     # Use half of the cores on the machine
-    arcpy.env.parallelProcessingFactor = "50%"
-    arcpy.env.overwriteOutput = True
 
     if os.path.exists(out_path) is False:
         os.mkdir(out_path)
 
-    in_features = big_grid
-    clip_features = small_grid
+    # 获取smallgrid的边界box
+    gdf_clip_grid = gpd.read_file(small_grid).to_crs(epsg=4326)
+    clip_bounds = gdf_clip_grid.total_bounds  # 获取grid的边界，用于获得裁剪roadshp的box
+    clip_box = box(clip_bounds[0], clip_bounds[1], clip_bounds[2], clip_bounds[3])
+    box_gdf = gpd.GeoDataFrame(geometry=[clip_box], crs=gdf_clip_grid.crs)  # 将box转化为gdf
+
     out_feature_class = f'{out_path}/Clipped.shp'
-    arcpy.analysis.Clip(in_features, clip_features, out_feature_class)
+    clip_out = gpd.overlay(box_gdf, gpd.read_file(big_grid).to_crs(epsg=4326), how='intersection')
+    clip_out.to_file(out_feature_class)
 
     file_list = glob.glob(f'{raster_dir}/*_*_{mm}__*__*.tiff')
     if len(file_list) == 0:
@@ -1086,10 +1098,13 @@ def zoning_statistics(small_grid, big_grid, raster_dir, out_path, mm):
         if os.path.exists(f'{out_path}/{out_name}.csv'):
             continue
         try:
-            outZSaT = ZonalStatisticsAsTable(out_feature_class, "NAME", file, f"{out_path}/{out_name}.dbf", statistics_type="SUM")
-            arcpy.conversion.TableToTable(outZSaT, out_path, f'{out_name}.csv')
+            outZSaT = rasterstats.zonal_stats(out_feature_class, file, stats="sum", geojson_out=True, nodata=-999)
+            result = gpd.GeoDataFrame.from_features(outZSaT)
+            result = result[result['sum'].notnull()] # 删除没有算出EF的部分
+            result = result.rename(columns={'sum': 'SUM'})
+            result.to_csv(f'{out_path}/{out_name}.csv', index=False)
             mid_out_list.append(f'{out_path}/{out_name}.csv')
-        except arcgisscripting.ExecuteError:
+        except :
             exit(f"ERROR: Please double check the file : {file}")
 
     # 删除多余文件
