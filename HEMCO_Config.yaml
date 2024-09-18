@@ -1,0 +1,143 @@
+global:
+  ROOT: '/Users/haofanwang/project_script/MEIAT-CMAQ/post_emissions'  # HEMCO data path.
+  GRIDDESC: '/Users/haofanwang/project_script/MEIAT-CMAQ/input/GRIDDESC.CN27km'
+  GRIDNAME: 'CN27km'
+  RUN_STARTDATE: 2017-01-01 00:00:00
+  RUN_ENDDATE: 2017-01-02 23:00:00
+  EMIS_TYPE: 'ALL'
+
+switch:
+  MIX: True
+
+emissions:
+  MIX:
+    - species_name: 'CO'
+      molecular_mass: 28.0101
+      gas_or_particle: 'gas'
+      variable_name: 'CO_Residential'
+      path: '$ROOT/MIX/v2.3/$YYYY/MIXv2.3_CO_$YYYY.nc'
+      species_profile: ~
+      sector: 'Residential'
+      mask: ~
+      temporal_format: '2017-2017/1-12/0/0'  # year-year/month-month/day-day/hour-hour
+      layer: 0  # layer 0 is the lowest priority layer.
+      monthly_profile: ~
+      weekly_profile: 0
+      hourly_profile: 0     
+
+    - species_name: 'CO'
+      molecular_mass: 28.0101
+      gas_or_particle: 'gas'
+      variable_name: 'CO_Transportation'
+      path: '$ROOT/MIX/v2.3/$YYYY/MIXv2.3_CO_$YYYY.nc'
+      species_profile: ~
+      sector: 'Transportation'
+      mask: ~
+      temporal_format: '2017-2017/1-12/0/0'  # year-year/month-month/day-day/hour-hour
+      layer: 0  # layer 0 is the lowest priority layer.
+      monthly_profile: ~
+      weekly_profile: 0
+      hourly_profile: 0  
+
+    - species_name: 'CO'
+      molecular_mass: 28.0101
+      gas_or_particle: 'gas'
+      variable_name: 'CO_Agriculture'
+      path: '$ROOT/MIX/v2.3/$YYYY/MIXv2.3_CO_$YYYY.nc'
+      species_profile: ~
+      sector: 'Agriculture'
+      mask: ~
+      temporal_format: '2017-2017/1-12/0/0'  # year-year/month-month/day-day/hour-hour
+      layer: 0  # layer 0 is the lowest priority layer.
+      monthly_profile: ~
+      weekly_profile: 0
+      hourly_profile: 0  
+    
+    - species_name: 'CO'
+      molecular_mass: 28.0101
+      gas_or_particle: 'gas'
+      variable_name: 'CO_Industry'
+      path: '$ROOT/MIX/v2.3/$YYYY/MIXv2.3_CO_$YYYY.nc'
+      species_profile: ~
+      sector: 'Industry'
+      mask: ~
+      temporal_format: '2017-2017/1-12/0/0'  # year-year/month-month/day-day/hour-hour
+      layer: 0  # layer 0 is the lowest priority layer.
+      monthly_profile: ~
+      weekly_profile: 0
+      hourly_profile: 0 
+    
+    - species_name: 'CO'
+      molecular_mass: 28.0101
+      gas_or_particle: 'gas'
+      variable_name: 'CO_Open_biomass'
+      path: '$ROOT/MIX/v2.3/$YYYY/MIXv2.3_CO_$YYYY.nc'
+      species_profile: ~
+      sector: 'Open_biomass'
+      mask: ~
+      temporal_format: '2017-2017/1-12/0/0'  # year-year/month-month/day-day/hour-hour
+      layer: 0  # layer 0 is the lowest priority layer.
+      monthly_profile: ~
+      weekly_profile: 0
+      hourly_profile: 0 
+    
+    - species_name: 'CO'
+      molecular_mass: 28.0101
+      gas_or_particle: 'gas'
+      variable_name: 'CO_Power'
+      path: '$ROOT/MIX/v2.3/$YYYY/MIXv2.3_CO_$YYYY.nc'
+      species_profile: ~
+      sector: 'Power'
+      mask: ~
+      temporal_format: '2017-2017/1-12/0/0'  # year-year/month-month/day-day/hour-hour
+      layer: 0  # layer 0 is the lowest priority layer.
+      monthly_profile: ~
+      weekly_profile: 0
+      hourly_profile: 0 
+    
+    - species_name: 'CO'
+      molecular_mass: 28.0101
+      gas_or_particle: 'gas'
+      variable_name: 'CO_Shipping'
+      path: '$ROOT/MIX/v2.3/$YYYY/MIXv2.3_CO_$YYYY.nc'
+      species_profile: ~
+      sector: 'Shipping'
+      mask: ~
+      temporal_format: '2017-2017/1-12/0/0'  # year-year/month-month/day-day/hour-hour
+      layer: 0  # layer 0 is the lowest priority layer.
+      monthly_profile: ~
+      weekly_profile: 0
+      hourly_profile: 0 
+
+
+temporal_profile:
+
+  # The monthly profile is for January to December.
+  monthly:
+    - index: 0
+      label: 'Residential'
+      profile: [0.08333, 0.083333, 0.08333, 0.083333,
+                0.08333, 0.083333, 0.08333, 0.083333,
+                0.08333, 0.083333, 0.08333, 0.083333,
+                0.08333, 0.083333, 0.08333, 0.083333]
+
+  # The weekly profile is for Monday to Sunday.
+  weekly:
+    - index: 0
+      label: 'Residential'
+      profile: [0.142857143, 0.142857143, 0.142857143,
+                0.142857143, 0.142857143, 0.142857143, 0.142857143]
+
+  # The hourly profile is for 00:00 to 23:00 (UTC).
+  hourly:
+    - index: 0
+      label: 'Residential'
+      profile: [0.038,0.038,0.03,0.045,
+                0.045,0.038,0.03,0.03,
+                0.038,0.075,0.075,0.075,
+                0.075,0.054,0.018,0.018,
+                0.018,0.018,0.018,0.018,
+                0.018,0.038,0.075,0.075]
+    
+
+
